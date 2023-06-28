@@ -1,34 +1,90 @@
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
+import React from "react";
+import { AppBar, Toolbar } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import Switch from "@mui/material/Switch";
-import Logo from "../assets/logo.svg";
+import { styled } from "@mui/material/styles";
+import LogoDark from "../assets/logo-dark.svg";
+import LogoLight from "../assets/logo-light.svg";
 
-import "./Header.scss";
+const MyHeader = styled(AppBar)(({ theme }) => ({
+	backgroundColor: theme.palette.primary.main,
+}));
 
-function Header() {
+const Logo = styled("img")({
+	// width: 40,
+	// height: 40,
+	width: "33px",
+	height: "32px",
+	top: "9px",
+	left: "9px",
+});
+
+const HeaderContent = styled("div")({
+	display: "flex",
+	alignItems: "center",
+	justifyContent: "space-between",
+	width: "100%",
+});
+
+const LogoTypographyContainer = styled("div")({
+	display: "flex",
+	alignItems: "center",
+});
+
+const TypographyText = styled(Typography)({
+	marginRight: "8px",
+	fontFamily: "Roboto",
+	fontSize: "14px",
+	fontWeight: "400",
+	lineHeight: "24px",
+	letterSpacing: "0.5px",
+	textAlign: "left",
+});
+
+const ThemeSwitcher = styled("div")({
+	display: "flex",
+	alignItems: "center",
+	marginLeft: "16px",
+});
+
+const IconLightMode = styled(LightModeIcon)({
+	width: "22px",
+	height: "22px",
+	top: "1px",
+	left: "1px",
+});
+
+const IconDarkMode = styled(DarkModeIcon)`IconLightMode`;
+
+function Header({ isDarkMode, handleThemeToggle }) {
 	return (
-		<AppBar position="relative">
-			<Container maxWidth="xl">
-				<div>
-					<div className="Viral-naiton-logo">
-						<Toolbar disableGutters>
-							<img alt="Viral-naiton-logo" src={Logo}></img>
-							<Typography noWrap>iral Nation</Typography>
-						</Toolbar>
-					</div>
-					<div className="Theme-Switch">
-						<LightModeIcon className="icon"></LightModeIcon>
-						<Switch color="warning" defaultChecked />
-						<DarkModeIcon></DarkModeIcon>
-					</div>
-				</div>
-			</Container>
-		</AppBar>
+		<MyHeader position="static">
+			<Toolbar>
+				<HeaderContent>
+					<LogoTypographyContainer>
+						<Logo
+							alt="Viral-nation-logo"
+							src={!isDarkMode ? LogoDark : LogoLight}
+						/>
+						<TypographyText variant="h6" noWrap>
+							iral Nation
+						</TypographyText>
+					</LogoTypographyContainer>
+					<ThemeSwitcher>
+						<IconLightMode />
+						<Switch
+							checked={isDarkMode}
+							onChange={handleThemeToggle}
+							color="warning"
+						/>
+						<IconDarkMode />
+					</ThemeSwitcher>
+				</HeaderContent>
+			</Toolbar>
+		</MyHeader>
 	);
 }
+
 export default Header;
