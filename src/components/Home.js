@@ -1,16 +1,21 @@
 import React from "react";
+import { client } from "./GraphqlConnection";
+import { ApolloProvider } from "@apollo/client";
+
 import Header from "./Header";
-import Body from "./Body";
+import CardView from "./CardView";
 
 function Home({ isDarkMode, handleThemeToggle }) {
 	return (
-		<div>
-			<Header
-				isDarkMode={isDarkMode}
-				handleThemeToggle={handleThemeToggle}
-			></Header>
-			<Body></Body>
-		</div>
+		<ApolloProvider client={client}>
+			<div>
+				<Header
+					isDarkMode={isDarkMode}
+					handleThemeToggle={handleThemeToggle}
+				></Header>
+				<CardView></CardView>
+			</div>
+		</ApolloProvider>
 	);
 }
 

@@ -34,12 +34,7 @@ const LogoTypographyContainer = styled("div")({
 });
 
 const TypographyText = styled(Typography)({
-	marginRight: "8px",
-	fontFamily: "Roboto",
-	fontSize: "14px",
-	fontWeight: "400",
-	lineHeight: "24px",
-	letterSpacing: "0.5px",
+	marginRight: "wpx",
 	textAlign: "left",
 });
 
