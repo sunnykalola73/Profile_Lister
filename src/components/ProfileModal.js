@@ -7,13 +7,17 @@ import {
 	DialogActions,
 	Grid,
 	TextField,
-	FormControlLabel,
 	Switch,
+	InputLabel,
+	Typography,
+	Slide,
 } from "@mui/material";
 import { useMutation } from "@apollo/react-hooks";
 import { CREATE_PROFILE_MUTATION, UPDATE_PROFILE } from "../.graphql/mutations";
-import { styled } from "@mui/material/styles";
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+	return <Slide direction="left" ref={ref} {...props} />;
+});
 const ProfileModal = ({ isOpen, closeModal, profileToEdit = {} }) => {
 	const [imageUrl, setImageUrl] = useState(profileToEdit?.image_url || "");
 	const [email, setEmail] = useState(profileToEdit?.email || "");
@@ -25,25 +29,6 @@ const ProfileModal = ({ isOpen, closeModal, profileToEdit = {} }) => {
 	const [isVerified, setIsVerified] = useState(
 		profileToEdit?.is_verified || false
 	);
-
-	const SidePanel = styled(Dialog)(({ open }) => ({
-		"& .MuiDialog-paper": {
-			width: "50%", // Adjust the width as per your requirements
-			position: "fixed",
-			height: "100%",
-			top: 0,
-			marginRight: 0,
-			right: 0, // Position it on the right side
-			transform: `translateX(${open ? "0" : "100%"})`, // Slide in from the right
-			transition: "transform 0.3s ease-in-out",
-			backgroundColor: "#fff",
-			zIndex: 9999,
-			boxShadow: "0 0 10px rgba(0, 0, 0, 0.3)",
-			overflowY: "auto",
-			padding: "20px",
-		},
-	}));
-
 	useEffect(() => {
 		setImageUrl(profileToEdit?.image_url || "");
 		setEmail(profileToEdit?.email || "");
@@ -89,45 +74,67 @@ const ProfileModal = ({ isOpen, closeModal, profileToEdit = {} }) => {
 	};
 
 	return (
-		<SidePanel open={isOpen} onClose={closeModal}>
+		// <SidePanel open={isOpen} onClose={closeModal}>
+		<Dialog
+			open={isOpen}
+			onClose={closeModal}
+			sx={{
+				width: "50%"
+				display: "flex",
+				alignItems: "center",
+				justifyContent: "flex-end !important",
+			}}
+			fullScreen
+			TransitionComponent={Transition}
+		>
 			<DialogTitle>Create Profile</DialogTitle>
 			<DialogContent>
 				<Grid container spacing={2}>
 					<Grid item xs={12}>
+						<InputLabel shrink htmlFor="bootstrap-input">
+							Image link
+						</InputLabel>
 						<TextField
-							label="Image Link"
 							value={imageUrl}
 							onChange={(e) => setImageUrl(e.target.value)}
 							fullWidth
 						/>
 					</Grid>
 					<Grid item xs={6}>
+						<InputLabel shrink htmlFor="bootstrap-input">
+							First Name
+						</InputLabel>
 						<TextField
-							label="First Name"
 							value={firstName}
 							onChange={(e) => setFirstName(e.target.value)}
 							fullWidth
 						/>
 					</Grid>
 					<Grid item xs={6}>
+						<InputLabel shrink htmlFor="bootstrap-input">
+							Last Name
+						</InputLabel>
 						<TextField
-							label="Last Name"
 							value={lastName}
 							onChange={(e) => setLastName(e.target.value)}
 							fullWidth
 						/>
 					</Grid>
 					<Grid item xs={12}>
+						<InputLabel shrink htmlFor="bootstrap-input">
+							Email
+						</InputLabel>
 						<TextField
-							label="Email Address"
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 							fullWidth
 						/>
 					</Grid>
 					<Grid item xs={12}>
+						<InputLabel shrink htmlFor="bootstrap-input">
+							Description
+						</InputLabel>
 						<TextField
-							label="Description"
 							value={description}
 							onChange={(e) => setDescription(e.target.value)}
 							fullWidth
@@ -136,29 +143,33 @@ const ProfileModal = ({ isOpen, closeModal, profileToEdit = {} }) => {
 						/>
 					</Grid>
 					<Grid item xs={12}>
-						<FormControlLabel
-							labelPlacement="start"
-							control={
-								<Switch
-									color="info"
-									edge="end"
-									required="true"
-									size="medium"
-									checked={isVerified}
-									onChange={handleToggleChange}
-								/>
-							}
-							label="Telent is Verified"
-						/>
+						<InputLabel shrink htmlFor="bootstrap-input">
+							Verification
+						</InputLabel>
+						<div
+							style={{ display: "flex", width: "100%", alignItems: "center" }}
+						>
+							<Typography variant="body1" style={{ marginRight: "10px" }}>
+								{isVerified ? "Talent is Verified" : "Talent is not Verified"}
+							</Typography>
+							<Switch
+								color="info"
+								edge="end"
+								required="true"
+								size="medium"
+								checked={isVerified}
+								onChange={handleToggleChange}
+							/>
+						</div>
 					</Grid>
 				</Grid>
 			</DialogContent>
 			<DialogActions>
-				<Button onClick={handleSubmit} variant="contained" color="primary">
+				<Button onClick={handleSubmit} variant="contained" color="info">
 					{profileToEdit ? `Update` : `Create`}
 				</Button>
 			</DialogActions>
-		</SidePanel>
+		</Dialog>
 	);
 };
 
