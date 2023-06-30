@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { useMutation } from "@apollo/react-hooks";
 import { CREATE_PROFILE_MUTATION, UPDATE_PROFILE } from "../.graphql/mutations";
+import { styled } from "@mui/material/styles";
 
 const ProfileModal = ({ isOpen, closeModal, profileToEdit = {} }) => {
 	const [imageUrl, setImageUrl] = useState(profileToEdit?.image_url || "");
@@ -24,6 +25,24 @@ const ProfileModal = ({ isOpen, closeModal, profileToEdit = {} }) => {
 	const [isVerified, setIsVerified] = useState(
 		profileToEdit?.is_verified || false
 	);
+
+	const SidePanel = styled(Dialog)(({ open }) => ({
+		"& .MuiDialog-paper": {
+			width: "50%", // Adjust the width as per your requirements
+			position: "fixed",
+			height: "100%",
+			top: 0,
+			marginRight: 0,
+			right: 0, // Position it on the right side
+			transform: `translateX(${open ? "0" : "100%"})`, // Slide in from the right
+			transition: "transform 0.3s ease-in-out",
+			backgroundColor: "#fff",
+			zIndex: 9999,
+			boxShadow: "0 0 10px rgba(0, 0, 0, 0.3)",
+			overflowY: "auto",
+			padding: "20px",
+		},
+	}));
 
 	useEffect(() => {
 		setImageUrl(profileToEdit?.image_url || "");
@@ -70,36 +89,9 @@ const ProfileModal = ({ isOpen, closeModal, profileToEdit = {} }) => {
 	};
 
 	return (
-		<Dialog
-			open={isOpen}
-			onClose={closeModal}
-			fullWidth
-			maxWidth="sm"
-			PaperProps={{
-				sx: {
-					width: "100%",
-					height: "100%",
-					maxWidth: "none",
-					borderRadius: 0,
-					display: "flex",
-					flexDirection: "row",
-					overflow: "hidden",
-				},
-			}}
-			BackdropProps={{
-				sx: {
-					backgroundColor: "rgba(0, 0, 0, 0.5)",
-				},
-			}}
-		>
+		<SidePanel open={isOpen} onClose={closeModal}>
 			<DialogTitle>Create Profile</DialogTitle>
-			<DialogContent
-				sx={{
-					flex: "1 1 auto",
-					overflowY: "auto",
-					overflowX: { xs: "hidden", md: "auto" },
-				}}
-			>
+			<DialogContent>
 				<Grid container spacing={2}>
 					<Grid item xs={12}>
 						<TextField
@@ -145,8 +137,16 @@ const ProfileModal = ({ isOpen, closeModal, profileToEdit = {} }) => {
 					</Grid>
 					<Grid item xs={12}>
 						<FormControlLabel
+							labelPlacement="start"
 							control={
-								<Switch checked={isVerified} onChange={handleToggleChange} />
+								<Switch
+									color="info"
+									edge="end"
+									required="true"
+									size="medium"
+									checked={isVerified}
+									onChange={handleToggleChange}
+								/>
 							}
 							label="Telent is Verified"
 						/>
@@ -158,7 +158,7 @@ const ProfileModal = ({ isOpen, closeModal, profileToEdit = {} }) => {
 					{profileToEdit ? `Update` : `Create`}
 				</Button>
 			</DialogActions>
-		</Dialog>
+		</SidePanel>
 	);
 };
 
