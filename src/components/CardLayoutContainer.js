@@ -1,6 +1,7 @@
 import React from "react";
 import { Grid } from "@mui/material";
 import DisplayCard from "./Card";
+import CircleLoading from "./LoadingUI";
 
 function CardLayoutContainer({
 	loading,
@@ -11,13 +12,13 @@ function CardLayoutContainer({
 	openRemoveProfileModal,
 	setProfileRemoveId,
 }) {
-	if (loading) return <p>Loading...</p>;
-	if (error) return <p>Something went Wrong</p>;
+	if (loading) return <CircleLoading />;
+	if (error) return <p>Something went wrong.</p>;
 	if (getAllProfiles.profiles.length === 0) return <p>No Data </p>;
 	return (
 		<Grid container spacing={1}>
-			{getAllProfiles.profiles.map((profile) => (
-				<Grid item xs={12} sm={6} md={3} key={profile.id}>
+			{getAllProfiles.profiles.map((profile, idx) => (
+				<Grid item xs={12} sm={6} md={3} key={idx}>
 					<DisplayCard
 						setProfileRemoveId={setProfileRemoveId}
 						openRemoveProfileModal={openRemoveProfileModal}

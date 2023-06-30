@@ -1,6 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 import _debounce from "loadsh/debounce";
+import InfiniteScroll from "react-infinite-scroll-component";
+import CircleLoading from "./LoadingUI";
+import { css } from "@emotion/react";
 
 import { Container, Button, Grid, TextField, Typography } from "@mui/material";
 import PersonAddAltRoundedIcon from "@mui/icons-material/PersonAddAltRounded";
@@ -13,7 +16,23 @@ import { GET_ALL_PROFILES } from "../.graphql/mutations";
 const CreateProfileText = styled(Typography)({
 	textTransform: "initial",
 	marginLeft: 4,
+	textWrap: "nowrap",
+	fontSize: "14px",
+	letterSpacing: "0.25px",
 });
+
+const StyledContainer = styled(Container)(
+	({ theme }) => css`
+		@media (min-width: ${theme.breakpoints.values.md}px) {
+			width: 80%;
+		}
+	`,
+	{
+		minHeight: "101vh",
+		overflow: "auto",
+		scrollbarWidth: "thin",
+	}
+);
 
 function CardView() {
 	const [searchString, setSearchString] = useState("");
@@ -23,6 +42,7 @@ function CardView() {
 	const [isRemoveProfileOpen, setIsRemoveProfileOpen] = useState(false);
 	const [profileRemoveId, setProfileRemoveId] = useState("");
 
+	const rowsPerFetchCall = 16;
 	const handleSearch = useCallback((event) => {
 		const { value } = event.target;
 		setSearchString(value);
@@ -45,24 +65,54 @@ function CardView() {
 		setIsRemoveProfileOpen(false);
 	}, []);
 
-	const { loading, error, data, refetch } = useQuery(GET_ALL_PROFILES, {
-		variables: {
-			orderBy: { key: "is_verified", sort: "desc" },
-			rows: 16,
-			page: 0,
-			searchString: searchString,
-		},
-	});
+	const { loading, error, data, refetch, fetchMore } = useQuery(
+		GET_ALL_PROFILES,
+		{
+			variables: {
+				orderBy: { key: "is_verified", sort: "desc" },
+				rows: rowsPerFetchCall,
+				page: 0,
+				searchString: `.*${searchString}.*`,
+			},
+		}
+	);
 
 	useEffect(
 		_debounce(() => {
-			refetch();
+			fetchMore({
+				variables: {
+					page: 0, // Reset the page to 0 when searching
+					searchString: searchString,
+				},
+				updateQuery: (prevResult, { fetchMoreResult }) => fetchMoreResult,
+			});
 		}, 500),
-		[searchString, refetch]
+		[searchString, fetchMore]
 	);
 
+	const loadMore = () => {
+		fetchMore({
+			variables: {
+				page: data.getAllProfiles.profiles.length / rowsPerFetchCall,
+				searchString: searchString,
+			},
+			updateQuery: (prevResult, { fetchMoreResult }) => {
+				if (!fetchMoreResult) return prevResult;
+				return {
+					getAllProfiles: {
+						...fetchMoreResult.getAllProfiles,
+						profiles: [
+							...prevResult.getAllProfiles.profiles,
+							...fetchMoreResult.getAllProfiles.profiles,
+						],
+					},
+				};
+			},
+		});
+	};
+
 	return (
-		<Container maxWidth="xl">
+		<StyledContainer>
 			{/* Searchbar and Create Profile Icon */}
 			<Grid
 				container
@@ -70,7 +120,7 @@ function CardView() {
 				alignItems="center"
 				style={{ padding: "16px" }}
 			>
-				<Grid item xs={12} sm={6} md={4} lg={10}>
+				<Grid item xs={12} sm={8} md={9} lg={10}>
 					<TextField
 						label="Search"
 						onChange={handleSearch}
@@ -79,8 +129,9 @@ function CardView() {
 						fullWidth
 					/>
 				</Grid>
-				<Grid item xs={12} sm={6} md={4} lg={2}>
+				<Grid item xs={12} sm={4} md={3} lg={2}>
 					<Button
+						style={{ height: "40px" }}
 						variant="outlined"
 						size="large"
 						color="info"
@@ -91,17 +142,27 @@ function CardView() {
 					</Button>
 				</Grid>
 			</Grid>
-
 			{/* To Display data in a Frid format */}
-			<CardLayoutContainer
-				setProfileRemoveId={setProfileRemoveId}
-				setProfileToEdit={setProfileToEdit}
-				openModal={openModal}
-				loading={loading}
-				error={error}
-				data={data}
-				openRemoveProfileModal={openRemoveProfileModal}
-			/>
+			<InfiniteScroll
+				dataLength={data?.getAllProfiles?.profiles?.length || 0}
+				next={loadMore}
+				hasMore={
+					!loading &&
+					data?.getAllProfiles?.size > data?.getAllProfiles?.profiles?.length
+				}
+				loader={<CircleLoading />}
+				endMessage={<p>No more profiles to load.</p>}
+			>
+				<CardLayoutContainer
+					setProfileRemoveId={setProfileRemoveId}
+					setProfileToEdit={setProfileToEdit}
+					openModal={openModal}
+					loading={loading}
+					error={error}
+					data={data}
+					openRemoveProfileModal={openRemoveProfileModal}
+				/>
+			</InfiniteScroll>
 			<ProfileModal
 				profileToEdit={profileToEdit}
 				isOpen={isOpen}
@@ -114,7 +175,7 @@ function CardView() {
 				isRemoveProfileOpen={isRemoveProfileOpen}
 				closeRemoveProfileModal={closeRemoveProfileModal}
 			/>
-		</Container>
+		</StyledContainer>
 	);
 }
 

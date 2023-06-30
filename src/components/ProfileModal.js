@@ -70,9 +70,36 @@ const ProfileModal = ({ isOpen, closeModal, profileToEdit = {} }) => {
 	};
 
 	return (
-		<Dialog open={isOpen} onClose={closeModal}>
+		<Dialog
+			open={isOpen}
+			onClose={closeModal}
+			fullWidth
+			maxWidth="sm"
+			PaperProps={{
+				sx: {
+					width: "100%",
+					height: "100%",
+					maxWidth: "none",
+					borderRadius: 0,
+					display: "flex",
+					flexDirection: "row",
+					overflow: "hidden",
+				},
+			}}
+			BackdropProps={{
+				sx: {
+					backgroundColor: "rgba(0, 0, 0, 0.5)",
+				},
+			}}
+		>
 			<DialogTitle>Create Profile</DialogTitle>
-			<DialogContent>
+			<DialogContent
+				sx={{
+					flex: "1 1 auto",
+					overflowY: "auto",
+					overflowX: { xs: "hidden", md: "auto" },
+				}}
+			>
 				<Grid container spacing={2}>
 					<Grid item xs={12}>
 						<TextField

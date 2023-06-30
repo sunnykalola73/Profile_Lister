@@ -81,8 +81,11 @@ const StyledCardContent = styled(CardContent)({
 	lineHeight: "16px",
 	letterSpacing: "0.4px",
 	textAlign: "justify",
-	maxHeight: "200px",
-	overflow: "auto",
+	maxHeight: "112px", // Adjust the height based on line height and desired maximum lines
+	overflow: "hidden",
+	display: "-webkit-box",
+	WebkitLineClamp: 6,
+	WebkitBoxOrient: "vertical",
 });
 
 const StyledCardHeader = styled(CardHeader)({
