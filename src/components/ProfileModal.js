@@ -27,6 +27,17 @@ const StyledSubmitButton = styled(Button)({
 	textTransform: "none",
 });
 
+const StyledDiv = styled("div")(({ theme }) => ({
+	display: "flex",
+	width: "100%",
+	alignItems: "center",
+	backgroundColor: theme.palette.secondary.main,
+	borderRadius: "4px",
+	border: "1px",
+	padding: "16px",
+	justifyContent: "space-between",
+}));
+
 const ProfileModal = ({ isOpen, closeModal, profileToEdit = {} }) => {
 	const [imageUrl, setImageUrl] = useState(profileToEdit?.image_url || "");
 	const [email, setEmail] = useState(profileToEdit?.email || "");
@@ -106,6 +117,9 @@ const ProfileModal = ({ isOpen, closeModal, profileToEdit = {} }) => {
 					flexDirection: "column",
 					position: "absolute",
 					right: 0,
+					"@media (min-width: 600px)": {
+						width: "50%",
+					},
 				},
 			}}
 			fullScreen
@@ -130,10 +144,11 @@ const ProfileModal = ({ isOpen, closeModal, profileToEdit = {} }) => {
 			<DialogContent>
 				<Grid container spacing={2}>
 					<Grid item xs={12}>
-						<InputLabel shrink htmlFor="bootstrap-input">
+						<InputLabel shrink htmlFor="bootstrap-input" size="small">
 							Image link
 						</InputLabel>
 						<TextField
+							size="small"
 							value={imageUrl}
 							onChange={(e) => setImageUrl(e.target.value)}
 							fullWidth
@@ -144,6 +159,7 @@ const ProfileModal = ({ isOpen, closeModal, profileToEdit = {} }) => {
 							First Name
 						</InputLabel>
 						<TextField
+							size="small"
 							value={firstName}
 							onChange={(e) => setFirstName(e.target.value)}
 							fullWidth
@@ -154,6 +170,7 @@ const ProfileModal = ({ isOpen, closeModal, profileToEdit = {} }) => {
 							Last Name
 						</InputLabel>
 						<TextField
+							size="small"
 							value={lastName}
 							onChange={(e) => setLastName(e.target.value)}
 							fullWidth
@@ -164,6 +181,7 @@ const ProfileModal = ({ isOpen, closeModal, profileToEdit = {} }) => {
 							Email
 						</InputLabel>
 						<TextField
+							size="small"
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 							fullWidth
@@ -174,6 +192,7 @@ const ProfileModal = ({ isOpen, closeModal, profileToEdit = {} }) => {
 							Description
 						</InputLabel>
 						<TextField
+							placeholder="Write a description for the talent"
 							value={description}
 							onChange={(e) => setDescription(e.target.value)}
 							fullWidth
@@ -185,21 +204,18 @@ const ProfileModal = ({ isOpen, closeModal, profileToEdit = {} }) => {
 						<InputLabel shrink htmlFor="bootstrap-input">
 							Verification
 						</InputLabel>
-						<div
-							style={{ display: "flex", width: "100%", alignItems: "center" }}
-						>
-							<Typography variant="body1" style={{ marginRight: "10px" }}>
+						<StyledDiv>
+							<Typography variant="body2" style={{ marginRight: "10px" }}>
 								{isVerified ? "Talent is Verified" : "Talent is not Verified"}
 							</Typography>
 							<Switch
 								color="info"
-								edge="end"
-								required="true"
-								size="medium"
+								required
+								size="small"
 								checked={isVerified}
 								onChange={handleToggleChange}
 							/>
-						</div>
+						</StyledDiv>
 					</Grid>
 				</Grid>
 			</DialogContent>

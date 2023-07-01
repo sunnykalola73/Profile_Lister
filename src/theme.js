@@ -23,9 +23,9 @@ export const lightTheme = createTheme({
 		popup: {
 			main: "#FCFCFD",
 		},
-		removeProfile: {
-			main: "#E0E0E0",
-		},
+		// removeProfile: {
+		// 	main: "#E0E0E0",
+		// },
 	},
 	breakpoints,
 });
@@ -42,9 +42,9 @@ export const darkTheme = createTheme({
 		popup: {
 			main: "#18181C",
 		},
-		removeProfile: {
-			main: "#232425",
-		},
+		// removeProfile: {
+		// 	main: "#232425",
+		// },
 	},
 	breakpoints,
 });

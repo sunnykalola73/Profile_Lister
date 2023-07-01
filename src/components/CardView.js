@@ -5,7 +5,14 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import CircleLoading from "./LoadingUI";
 import { css } from "@emotion/react";
 
-import { Container, Button, Grid, TextField, Typography } from "@mui/material";
+import {
+	Container,
+	Button,
+	Grid,
+	TextField,
+	Typography,
+	Box,
+} from "@mui/material";
 import PersonAddAltRoundedIcon from "@mui/icons-material/PersonAddAltRounded";
 import styled from "@emotion/styled";
 import CardLayoutContainer from "./CardLayoutContainer";
@@ -116,12 +123,12 @@ function CardView() {
 			{/* Searchbar and Create Profile Icon */}
 			<Grid
 				container
-				spacing={2}
-				alignItems="center"
-				style={{ padding: "16px" }}
+				spacing={1}
+				style={{ marginTop: "48px", marginBottom: "40px" }}
 			>
 				<Grid item xs={12} sm={8} md={9} lg={10}>
 					<TextField
+						size="small"
 						label="Search"
 						onChange={handleSearch}
 						variant="outlined"
@@ -129,7 +136,7 @@ function CardView() {
 						fullWidth
 					/>
 				</Grid>
-				<Grid item xs={12} sm={4} md={3} lg={2}>
+				<Grid item>
 					<Button
 						style={{ height: "40px" }}
 						variant="outlined"

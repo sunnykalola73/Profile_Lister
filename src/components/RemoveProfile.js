@@ -16,7 +16,7 @@ import { DELETE_PROFILE } from "../.graphql/mutations";
 import { styled } from "@mui/material/styles";
 
 const StyledButton = styled(Button)({
-	width: "168px",
+	// width: "168px",
 	height: "36px",
 	padding: "8px 12px 8px 12px",
 	borderRadius: "6px",
@@ -62,10 +62,9 @@ function RemoveProfileDialog({
 		<Dialog
 			open={isRemoveProfileOpen}
 			onClose={closeRemoveProfileModal}
-			// maxWidth="xs"
 			fullWidth
-			sx={{
-				backgroundColor: "removeProfile.main",
+			style={{
+				maxWidth: "400px",
 			}}
 		>
 			<DialogTitle sx={{ padding: 0 }}>
@@ -100,6 +99,7 @@ function RemoveProfileDialog({
 			<DialogActions
 				sx={{
 					alignSelf: "center",
+					maxWidth: "96%",
 				}}
 			>
 				<StyledButton onClick={closeRemoveProfileModal} variant="contained">

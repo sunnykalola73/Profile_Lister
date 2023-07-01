@@ -15,7 +15,6 @@ import VerifiedLogo from "../assets/verified-logo.svg";
 
 const StyledCard = styled(Card)(({ theme }) => ({
 	borderRadius: "8px",
-	gap: "10px",
 	width: "100%",
 	height: 200,
 	padding: "24px",
@@ -74,7 +73,6 @@ const StyledCardContent = styled(CardContent)({
 	fontWeight: "400",
 	lineHeight: "16px",
 	letterSpacing: "0.4px",
-	textAlign: "justify",
 	maxHeight: "112px", // Adjust the height based on line height and desired maximum lines
 	overflow: "hidden",
 	display: "-webkit-box",
@@ -88,10 +86,13 @@ const StyledCardHeader = styled(CardHeader)({
 	alignItems: "center",
 	justifyContent: "space-between",
 	padding: 0,
+	"& .MuiCardHeader-action": {
+		alignSelf: "center",
+	},
 });
 
 const MoreOption = styled(IconButton)({
-	padding: "16px",
+	padding: 0,
 });
 
 function DisplayCard({
@@ -126,7 +127,6 @@ function DisplayCard({
 	return (
 		<StyledCard>
 			<StyledCardHeader
-				style={{}}
 				avatar={
 					<ProfileImage src={profile.image_url} aria-label="avatarIcon">
 						R
