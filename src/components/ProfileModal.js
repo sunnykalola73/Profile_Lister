@@ -11,13 +11,22 @@ import {
 	InputLabel,
 	Typography,
 	Slide,
+	IconButton,
+	Divider,
 } from "@mui/material";
 import { useMutation } from "@apollo/react-hooks";
-import { CREATE_PROFILE_MUTATION, UPDATE_PROFILE } from "../.graphql/mutations";
+import { styled } from "@mui/material/styles";
+import CloseIcon from "@mui/icons-material/Close";
 
+import { CREATE_PROFILE_MUTATION, UPDATE_PROFILE } from "../.graphql/mutations";
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction="left" ref={ref} {...props} />;
 });
+
+const StyledSubmitButton = styled(Button)({
+	textTransform: "none",
+});
+
 const ProfileModal = ({ isOpen, closeModal, profileToEdit = {} }) => {
 	const [imageUrl, setImageUrl] = useState(profileToEdit?.image_url || "");
 	const [email, setEmail] = useState(profileToEdit?.email || "");
@@ -40,6 +49,10 @@ const ProfileModal = ({ isOpen, closeModal, profileToEdit = {} }) => {
 
 	const handleToggleChange = () => {
 		setIsVerified(!isVerified);
+	};
+
+	const handleClose = () => {
+		closeModal();
 	};
 
 	const [createProfile] = useMutation(CREATE_PROFILE_MUTATION);
@@ -79,15 +92,41 @@ const ProfileModal = ({ isOpen, closeModal, profileToEdit = {} }) => {
 			open={isOpen}
 			onClose={closeModal}
 			sx={{
-				width: "50%"
 				display: "flex",
 				alignItems: "center",
-				justifyContent: "flex-end !important",
+				justifyContent: "flex-end",
+			}}
+			PaperProps={{
+				sx: {
+					backgroundColor: "popup.main",
+					// width: "50%",
+					height: "100%",
+					maxHeight: "100%",
+					display: "flex",
+					flexDirection: "column",
+					position: "absolute",
+					right: 0,
+				},
 			}}
 			fullScreen
 			TransitionComponent={Transition}
 		>
-			<DialogTitle>Create Profile</DialogTitle>
+			<DialogTitle>
+				<div
+					style={{
+						display: "flex",
+						alignItems: "center",
+						justifyContent: "space-between",
+					}}
+				>
+					<Typography style={{ display: "flex", alignItems: "center" }}>
+						Create Profile
+					</Typography>
+					<IconButton edge="end" color="inherit" onClick={handleClose}>
+						<CloseIcon />
+					</IconButton>
+				</div>
+			</DialogTitle>
 			<DialogContent>
 				<Grid container spacing={2}>
 					<Grid item xs={12}>
@@ -164,10 +203,16 @@ const ProfileModal = ({ isOpen, closeModal, profileToEdit = {} }) => {
 					</Grid>
 				</Grid>
 			</DialogContent>
+			<Divider />
 			<DialogActions>
-				<Button onClick={handleSubmit} variant="contained" color="info">
+				<StyledSubmitButton
+					onClick={handleSubmit}
+					variant="contained"
+					color="info"
+				>
 					{profileToEdit ? `Update` : `Create`}
-				</Button>
+					{` Profile`}
+				</StyledSubmitButton>
 			</DialogActions>
 		</Dialog>
 	);

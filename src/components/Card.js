@@ -18,15 +18,8 @@ const StyledCard = styled(Card)(({ theme }) => ({
 	gap: "10px",
 	width: "100%",
 	height: 200,
-
-	[theme.breakpoints.down("sm")]: {
-		height: 150,
-	},
-
-	[theme.breakpoints.between("sm", "md")]: {
-		height: 180,
-	},
-
+	padding: "24px",
+	backgroundColor: theme.palette.secondary.main,
 	"& .MuiCardHeader-content": {
 		textOverflow: "ellipsis",
 		overflow: "hidden",
@@ -76,6 +69,7 @@ const StyledEmail = styled(Typography)({
 });
 
 const StyledCardContent = styled(CardContent)({
+	padding: "0px !important",
 	fontSize: "12px",
 	fontWeight: "400",
 	lineHeight: "16px",
@@ -84,15 +78,16 @@ const StyledCardContent = styled(CardContent)({
 	maxHeight: "112px", // Adjust the height based on line height and desired maximum lines
 	overflow: "hidden",
 	display: "-webkit-box",
-	WebkitLineClamp: 6,
+	WebkitLineClamp: 5,
 	WebkitBoxOrient: "vertical",
+	marginTop: "10px",
 });
 
 const StyledCardHeader = styled(CardHeader)({
 	display: "flex",
 	alignItems: "center",
 	justifyContent: "space-between",
-	padding: "16px 16px 0 16px",
+	padding: 0,
 });
 
 const MoreOption = styled(IconButton)({

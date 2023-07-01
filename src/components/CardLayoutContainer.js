@@ -18,7 +18,7 @@ function CardLayoutContainer({
 	return (
 		<Grid container spacing={1}>
 			{getAllProfiles.profiles.map((profile, idx) => (
-				<Grid item xs={12} sm={6} md={3} key={idx}>
+				<Grid item xs={12} sm={6} md={4} lg={3} key={idx}>
 					<DisplayCard
 						setProfileRemoveId={setProfileRemoveId}
 						openRemoveProfileModal={openRemoveProfileModal}

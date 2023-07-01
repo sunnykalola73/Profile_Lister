@@ -15,7 +15,16 @@ export const lightTheme = createTheme({
 	palette: {
 		mode: "light",
 		primary: {
+			main: "#F2F2F3",
+		},
+		secondary: {
+			main: "#EEEEEE",
+		},
+		popup: {
 			main: "#FCFCFD",
+		},
+		removeProfile: {
+			main: "#E0E0E0",
 		},
 	},
 	breakpoints,
@@ -25,7 +34,16 @@ export const darkTheme = createTheme({
 	palette: {
 		mode: "dark",
 		primary: {
+			main: "#121212",
+		},
+		secondary: {
 			main: "#181818",
+		},
+		popup: {
+			main: "#18181C",
+		},
+		removeProfile: {
+			main: "#232425",
 		},
 	},
 	breakpoints,

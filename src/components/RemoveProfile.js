@@ -6,9 +6,31 @@ import {
 	DialogActions,
 	Button,
 	Typography,
+	IconButton,
+	Divider,
 } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+
 import { useMutation } from "@apollo/client";
 import { DELETE_PROFILE } from "../.graphql/mutations";
+import { styled } from "@mui/material/styles";
+
+const StyledButton = styled(Button)({
+	width: "168px",
+	height: "36px",
+	padding: "8px 12px 8px 12px",
+	borderRadius: "6px",
+	border: "1px",
+	gap: "8px",
+});
+
+const StyledContent = styled(Typography)({
+	fontSize: "14px",
+	fontWeight: "400",
+	lineHeight: "20px",
+	letterSpacing: "0.25px",
+	textAlign: "left",
+});
 
 function RemoveProfileDialog({
 	profileRemoveId,
@@ -32,22 +54,64 @@ function RemoveProfileDialog({
 		closeRemoveProfileModal();
 	};
 
+	const handleClose = () => {
+		closeRemoveProfileModal();
+	};
+
 	return (
-		<Dialog open={isRemoveProfileOpen} onClose={closeRemoveProfileModal}>
-			<DialogTitle>Remove Profile</DialogTitle>
+		<Dialog
+			open={isRemoveProfileOpen}
+			onClose={closeRemoveProfileModal}
+			// maxWidth="xs"
+			fullWidth
+			sx={{
+				backgroundColor: "removeProfile.main",
+			}}
+		>
+			<DialogTitle sx={{ padding: 0 }}>
+				<div
+					style={{
+						display: "flex",
+						alignItems: "center",
+						justifyContent: "space-between",
+						padding: "24px",
+					}}
+				>
+					<Typography
+						variant="h7"
+						component="div"
+						style={{ display: "flex", alignItems: "center" }}
+					>
+						Remove Profile
+					</Typography>
+					<IconButton edge="end" color="inherit" onClick={handleClose}>
+						<CloseIcon />
+					</IconButton>
+				</div>
+			</DialogTitle>
+			<Divider />
 			<DialogContent>
-				<Typography>
-					Removed profile will be deleted permenantly and won't be available
+				<StyledContent>
+					Removed profile will be deleted permanently and won't be available
 					anymore.
-				</Typography>
+				</StyledContent>
 			</DialogContent>
-			<DialogActions>
-				<Button onClick={closeRemoveProfileModal} color="secondary">
+			<Divider />
+			<DialogActions
+				sx={{
+					alignSelf: "center",
+				}}
+			>
+				<StyledButton onClick={closeRemoveProfileModal} variant="contained">
 					Cancel
-				</Button>
-				<Button onClick={handleRemoveProfile} color="secondary">
+				</StyledButton>
+				<StyledButton
+					onClick={handleRemoveProfile}
+					variant="contained"
+					color="error"
+				>
 					Delete
-				</Button>
+				</StyledButton>
 			</DialogActions>
 		</Dialog>
 	);
