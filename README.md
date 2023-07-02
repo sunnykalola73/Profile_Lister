@@ -1,20 +1,20 @@
-# Profile_Listed
+# Profile_Lister
 
 This markdown provides information about a React project and outlines the basic steps to run the code.
 
 ## Project Details
 
-- Node version: [Insert Node version]
-- React version: [Insert React version]
+- Node version: v20.3.0
+- React version: 18.2.0
 
 ## Assumption:
 
 - Implemented only GridView considering the scope of the project.
-- In infinite scroll, it's not good to have a page numbers as there can be various types of scrolling, Hence it's not implemented.
+- In infinite scroll, it's not good to have page numbers as there can be various types of scrolling, Hence it's not implemented.
 
 ### Note
 
-This project will be deleted after the completion of the assessment to ensure the confidentiality and privacy of the code..
+This project will be deleted after the completion of the assessment to ensure the confidentiality and privacy of the code.
 
 ## Steps to Run the Code
 
