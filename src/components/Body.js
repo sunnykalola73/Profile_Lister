@@ -11,7 +11,6 @@ import CardLayoutContainer from "./BodyComponents/CardLayoutContainer";
 import ProfileModal from "./BodyComponents/ProfileModal";
 import RemoveProfileDialog from "./BodyComponents/RemoveProfile";
 import CircleLoading from "./BodyComponents/LoadingUI";
-
 import { GET_ALL_PROFILES } from "../.graphql/mutations";
 
 const CreateProfileText = styled(Typography)({

@@ -6,13 +6,14 @@ import CircleLoading from "./LoadingUI";
 function CardLayoutContainer({
 	loading,
 	error,
-	data: { getAllProfiles } = {},
 	setProfileToEdit,
 	openModal,
 	openRemoveProfileModal,
 	setProfileRemoveId,
+	data: { getAllProfiles } = {},
 }) {
 	if (loading) return <CircleLoading />;
+	// TODO: In Real project there ware better ways to handle it.
 	if (error) return <p>Something went wrong.</p>;
 	if (getAllProfiles.profiles.length === 0) return <p>No Data </p>;
 	return (

@@ -1,8 +1,6 @@
 import React from "react";
 import { Toolbar } from "@mui/material";
-
 import Switch from "@mui/material/Switch";
-
 import {
 	MyHeader,
 	HeaderContent,
@@ -13,6 +11,7 @@ import {
 	IconLightMode,
 	Logo,
 } from "./StyledHeaderComponents";
+
 import LogoDark from "../assets/logo-dark.svg";
 import LogoLight from "../assets/logo-light.svg";
 

@@ -22,10 +22,12 @@ import {
 	CREATE_PROFILE_MUTATION,
 	UPDATE_PROFILE,
 } from "../../.graphql/mutations";
+
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction="left" ref={ref} {...props} />;
 });
 
+// TODO: We can move all styled components to a new file and import these from there.
 const StyledSubmitButton = styled(Button)({
 	textTransform: "none",
 });

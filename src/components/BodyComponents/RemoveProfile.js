@@ -10,13 +10,13 @@ import {
 	Divider,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-
 import { useMutation } from "@apollo/client";
-import { DELETE_PROFILE } from "../../.graphql/mutations";
 import { styled } from "@mui/material/styles";
 
+import { DELETE_PROFILE } from "../../.graphql/mutations";
+
 const StyledButton = styled(Button)({
-	// width: "168px",
+	width: "160px",
 	height: "36px",
 	padding: "8px 12px 8px 12px",
 	borderRadius: "6px",

@@ -1,6 +1,12 @@
-# Getting Started with Create React App
+Node and React Version:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Assumption: Implemented only GridView considering the scope of the project.
+
+API used:
+
+API not used:
+
+This project will be deleted after completion of assesment.
 
 ## Available Scripts
 
