@@ -45,9 +45,9 @@ function RemoveProfileDialog({
 			await deleteProfile({
 				variables: { deleteProfileId: profileRemoveId },
 			});
+			await refetch();
 			console.log("Profile removed successfully");
 			setSearchString("");
-			await refetch();
 		} catch (error) {
 			console.error("Error removing profile:", error);
 		}
