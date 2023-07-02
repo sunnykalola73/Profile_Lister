@@ -131,9 +131,10 @@ function Body() {
 						variant="outlined"
 						value={searchString}
 						fullWidth
+						InputLabelProps={{ shrink: false }}
 					/>
 				</Grid>
-				<Grid item>
+				<Grid item style={{ marginLeft: "auto" }}>
 					<Button
 						style={{ height: "40px" }}
 						variant="outlined"
