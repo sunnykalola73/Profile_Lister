@@ -131,7 +131,6 @@ function Body() {
 						variant="outlined"
 						value={searchString}
 						fullWidth
-						InputLabelProps={{ shrink: false }}
 					/>
 				</Grid>
 				<Grid item style={{ marginLeft: "auto" }}>
