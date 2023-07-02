@@ -2,22 +2,16 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 import _debounce from "loadsh/debounce";
 import InfiniteScroll from "react-infinite-scroll-component";
-import CircleLoading from "./LoadingUI";
 import { css } from "@emotion/react";
-
-import {
-	Container,
-	Button,
-	Grid,
-	TextField,
-	Typography,
-	Box,
-} from "@mui/material";
+import { Container, Button, Grid, TextField, Typography } from "@mui/material";
 import PersonAddAltRoundedIcon from "@mui/icons-material/PersonAddAltRounded";
 import styled from "@emotion/styled";
-import CardLayoutContainer from "./CardLayoutContainer";
-import ProfileModal from "./ProfileModal";
-import RemoveProfileDialog from "./RemoveProfile";
+
+import CardLayoutContainer from "./BodyComponents/CardLayoutContainer";
+import ProfileModal from "./BodyComponents/ProfileModal";
+import RemoveProfileDialog from "./BodyComponents/RemoveProfile";
+import CircleLoading from "./BodyComponents/LoadingUI";
+
 import { GET_ALL_PROFILES } from "../.graphql/mutations";
 
 const CreateProfileText = styled(Typography)({
@@ -41,7 +35,7 @@ const StyledContainer = styled(Container)(
 	}
 );
 
-function CardView() {
+function Body() {
 	const [searchString, setSearchString] = useState("");
 	const [isOpen, setIsOpen] = useState(false);
 	const [profileToEdit, setProfileToEdit] = useState(null);
@@ -79,13 +73,13 @@ function CardView() {
 				orderBy: { key: "is_verified", sort: "desc" },
 				rows: rowsPerFetchCall,
 				page: 0,
-				searchString: `.*${searchString}.*`,
+				searchString,
 			},
 		}
 	);
 
-	useEffect(
-		_debounce(() => {
+	useEffect(() => {
+		const debounceFetch = _debounce(() => {
 			fetchMore({
 				variables: {
 					page: 0, // Reset the page to 0 when searching
@@ -93,9 +87,13 @@ function CardView() {
 				},
 				updateQuery: (prevResult, { fetchMoreResult }) => fetchMoreResult,
 			});
-		}, 500),
-		[searchString, fetchMore]
-	);
+		}, 500);
+		debounceFetch();
+
+		return () => {
+			debounceFetch.cancel();
+		};
+	}, [searchString, fetchMore]);
 
 	const loadMore = () => {
 		fetchMore({
@@ -158,7 +156,7 @@ function CardView() {
 					data?.getAllProfiles?.size > data?.getAllProfiles?.profiles?.length
 				}
 				loader={<CircleLoading />}
-				endMessage={<p>No more profiles to load.</p>}
+				endMessage={<Typography>No more profiles to load.</Typography>}
 			>
 				<CardLayoutContainer
 					setProfileRemoveId={setProfileRemoveId}
@@ -186,4 +184,4 @@ function CardView() {
 	);
 }
 
-export default CardView;
+export default Body;

@@ -18,7 +18,10 @@ import { useMutation } from "@apollo/react-hooks";
 import { styled } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
 
-import { CREATE_PROFILE_MUTATION, UPDATE_PROFILE } from "../.graphql/mutations";
+import {
+	CREATE_PROFILE_MUTATION,
+	UPDATE_PROFILE,
+} from "../../.graphql/mutations";
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction="left" ref={ref} {...props} />;
 });
@@ -91,6 +94,12 @@ const ProfileModal = ({ isOpen, closeModal, profileToEdit = {} }) => {
 				const { data } = await createProfile({ variables });
 				console.log("Profile created:", data.createProfile);
 			}
+			setImageUrl("");
+			setEmail("");
+			setFirstName("");
+			setLastName("");
+			setDescription("");
+			setIsVerified(false);
 			closeModal();
 		} catch (error) {
 			console.error("Error in mutating profile:", error);

@@ -12,7 +12,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 
 import { useMutation } from "@apollo/client";
-import { DELETE_PROFILE } from "../.graphql/mutations";
+import { DELETE_PROFILE } from "../../.graphql/mutations";
 import { styled } from "@mui/material/styles";
 
 const StyledButton = styled(Button)({
@@ -47,7 +47,7 @@ function RemoveProfileDialog({
 			});
 			console.log("Profile removed successfully");
 			setSearchString("");
-			refetch();
+			await refetch();
 		} catch (error) {
 			console.error("Error removing profile:", error);
 		}
@@ -63,8 +63,10 @@ function RemoveProfileDialog({
 			open={isRemoveProfileOpen}
 			onClose={closeRemoveProfileModal}
 			fullWidth
-			style={{
-				maxWidth: "400px",
+			PaperProps={{
+				sx: {
+					maxWidth: "400px",
+				},
 			}}
 		>
 			<DialogTitle sx={{ padding: 0 }}>

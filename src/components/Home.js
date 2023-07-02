@@ -3,7 +3,7 @@ import { client } from "./GraphqlConnection";
 import { ApolloProvider } from "@apollo/client";
 
 import Header from "./Header";
-import CardView from "./CardView";
+import Body from "./Body";
 
 function Home({ isDarkMode, handleThemeToggle }) {
 	return (
@@ -13,7 +13,7 @@ function Home({ isDarkMode, handleThemeToggle }) {
 					isDarkMode={isDarkMode}
 					handleThemeToggle={handleThemeToggle}
 				></Header>
-				<CardView></CardView>
+				<Body></Body>
 			</div>
 		</ApolloProvider>
 	);

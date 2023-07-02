@@ -11,7 +11,8 @@ import {
 	MenuItem,
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import VerifiedLogo from "../assets/verified-logo.svg";
+import VerifiedLogo from "../../assets/verified-logo.svg";
+import PortraitOutlinedIcon from "@mui/icons-material/PortraitOutlined";
 
 const StyledCard = styled(Card)(({ theme }) => ({
 	borderRadius: "8px",
@@ -129,7 +130,7 @@ function DisplayCard({
 			<StyledCardHeader
 				avatar={
 					<ProfileImage src={profile.image_url} aria-label="avatarIcon">
-						R
+						<PortraitOutlinedIcon />
 					</ProfileImage>
 				}
 				action={
@@ -156,10 +157,14 @@ function DisplayCard({
 							<StyledName>
 								{profile.first_name + " " + profile.last_name}
 							</StyledName>
-							<LogoVerified
-								alt={profile.id + "_verified_logo"}
-								src={VerifiedLogo}
-							/>
+							{profile.is_verified ? (
+								<LogoVerified
+									alt={profile.id + "_verified_logo"}
+									src={VerifiedLogo}
+								/>
+							) : (
+								<></>
+							)}
 						</NameWrapper>
 					</div>
 				}
