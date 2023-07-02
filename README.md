@@ -14,6 +14,8 @@ This markdown provides information about a React project and outlines the basic 
 
 ### Note
 
+> We need to add personalized token in Authorization field of  `/src/components/GraphqlConnection.js`.
+
 This project will be deleted after the completion of the assessment to ensure the confidentiality and privacy of the code.
 
 ## Steps to Run the Code
